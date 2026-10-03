@@ -1,0 +1,329 @@
+/* Nordschleife nacht for GTK3, layered on Adwaita (prefer-dark = 1).
+ * Ground and plate surfaces, hairlines, right angles only. One selection
+ * language: the raised row with the orange needle on its left edge (sidebar,
+ * lists, menus, the current crumb, the selected file): 2px of orange, never an
+ * orange fill. Menus, popovers and tooltips are flat plates with a hairline.
+ * A short tick separates the path segments (nordschleife-nacht/crumb-tick.png from
+ * ~/.config/hypr/nordschleife-nacht/build-art.py); list headers carry the tick scale.
+ * Thunar-only widgets are targeted through its own style classes
+ * (.path-bar-button, .standard-view, .shortcuts-pane, .statusbar-text); there
+ * is no .thunar class. Opacity comes from Hyprland, so backgrounds are opaque. */
+
+@define-color nord_ground #0A0A0B;
+@define-color nord_plate  #16181B;
+@define-color nord_raised #1F2226;
+@define-color nord_hair   #2E3238;
+@define-color nord_dim    #6B717A;
+@define-color nord_muted  #8A9099;
+@define-color nord_alu    #C9CDD2;
+@define-color nord_text   #F4F5F6;
+@define-color nord_needle #FF6A1A;
+@define-color nord_green  #7CCB9A;
+@define-color nord_red    #F5555B;
+
+@define-color theme_bg_color          @nord_ground;
+@define-color theme_fg_color          @nord_text;
+@define-color theme_base_color        @nord_plate;
+@define-color theme_text_color        @nord_text;
+@define-color theme_selected_bg_color @nord_raised;
+@define-color theme_selected_fg_color @nord_text;
+@define-color insensitive_fg_color    @nord_dim;
+@define-color borders                 @nord_hair;
+
+* {
+    font-family: "Barlow Semi Condensed", "Noto Kufi Arabic", "IBM Plex Sans Arabic", sans-serif;
+}
+
+/* ---- global: selection and scrollbars ------------------------------ */
+
+selection,
+*:selected,
+*:selected:focus {
+    background-color: @nord_raised;
+    color: @nord_text;
+}
+
+scrollbar,
+scrollbar trough {
+    background: transparent;
+    border: none;
+}
+
+scrollbar slider {
+    min-width: 3px;
+    min-height: 3px;
+    border: none;
+    border-radius: 0;
+    background-color: alpha(@nord_alu, 0.35);
+}
+
+scrollbar slider:hover {
+    background-color: alpha(@nord_alu, 0.70);
+}
+
+tooltip,
+tooltip.background {
+    background-color: @nord_plate;
+    border: 1px solid @nord_hair;
+    border-radius: 0;
+    color: @nord_text;
+}
+
+tooltip * {
+    color: @nord_text;
+}
+
+/* ---- surfaces ---------------------------------------------------- */
+
+window.background,
+menubar,
+.toolbar,
+toolbar,
+statusbar,
+notebook,
+notebook header,
+paned {
+    background-color: @nord_plate;
+    background-image: none;
+    color: @nord_text;
+    box-shadow: none;
+}
+
+.view,
+iconview,
+treeview.view,
+textview text,
+scrolledwindow viewport {
+    background-color: @nord_plate;
+    color: @nord_text;
+}
+
+.sidebar,
+.sidebar .view,
+placessidebar,
+placessidebar list {
+    background-color: @nord_ground;
+    color: @nord_text;
+}
+
+menubar,
+.toolbar,
+toolbar {
+    border-bottom: 1px solid @nord_hair;
+}
+
+menubar > menuitem {
+    color: @nord_muted;
+}
+
+menubar > menuitem:hover {
+    background-color: @nord_raised;
+    color: @nord_text;
+    box-shadow: inset 0 -2px @nord_alu;
+}
+
+/* Menus are flat plates with a hairline. */
+menu,
+.menu,
+.context-menu {
+    background-color: @nord_plate;
+    border: 1px solid @nord_hair;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 4px 0;
+    margin: 0;
+    color: @nord_text;
+}
+
+popover,
+popover.background {
+    background-color: @nord_plate;
+    border: 1px solid @nord_hair;
+    border-radius: 0;
+    box-shadow: none;
+    color: @nord_text;
+}
+
+menu menuitem:hover,
+.menu menuitem:hover {
+    background-color: @nord_raised;
+    color: @nord_text;
+    box-shadow: inset 2px 0 0 @nord_needle;
+}
+
+entry {
+    background-color: @nord_ground;
+    border: 1px solid @nord_hair;
+    border-radius: 0;
+    box-shadow: none;
+    color: @nord_text;
+    caret-color: @nord_needle;
+}
+
+entry:focus {
+    border-color: @nord_alu;
+}
+
+button {
+    border-radius: 0;
+}
+
+paned > separator {
+    background: @nord_hair;
+    background-image: none;
+    min-width: 1px;
+    min-height: 1px;
+}
+
+headerbar {
+    background: @nord_plate;
+    border-bottom: 1px solid @nord_hair;
+    border-radius: 0;
+    box-shadow: none;
+    color: @nord_text;
+}
+
+/* ---- Thunar ------------------------------------------------------- */
+
+/* Path bar: segments in muted mono with a short tick after each; the current
+ * segment is a raised block with the needle. GTK3 CSS has no generated content,
+ * so the tick is an image in each segment's right padding. */
+.path-bar-button {
+    background-color: transparent;
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 10px 18px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    color: @nord_muted;
+    font-family: "Overpass Mono", monospace;
+    font-size: 11px;
+    padding: 3px 18px 3px 4px;
+    margin: 0;
+    min-height: 0;
+}
+
+.path-bar .path-bar-button {
+    background-image: -gtk-scaled(url("nordschleife-nacht/crumb-tick.png"));
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 10px 18px;
+}
+
+.path-bar .path-bar-button:checked,
+.path-bar > .path-bar-button:nth-last-child(-n+2) {
+    background-image: none;
+}
+
+.path-bar-button:hover {
+    color: @nord_text;
+}
+
+.path-bar .path-bar-button:checked {
+    background-color: @nord_raised;
+    background-image: none;
+    border-radius: 0;
+    box-shadow: inset 2px 0 0 @nord_needle;
+    color: @nord_text;
+    font-weight: 500;
+    padding: 3px 12px;
+    margin: 4px 0 4px 4px;
+}
+
+.path-bar-button image {
+    color: @nord_muted;
+    -gtk-icon-style: symbolic;
+}
+
+.toolbar button,
+toolbar button {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: @nord_muted;
+}
+
+.toolbar button:hover,
+toolbar button:hover {
+    background-color: @nord_raised;
+    color: @nord_text;
+}
+
+.toolbar button:disabled,
+toolbar button:disabled {
+    color: alpha(@nord_dim, 0.7);
+}
+
+.shortcuts-pane {
+    border-right: 1px solid @nord_hair;
+}
+
+/* Sidebar: plain 16px line icons; the current place is the raised row with the needle. */
+.sidebar .view {
+    padding: 3px 0;
+    font-size: 13.5px;
+}
+
+.sidebar .view:selected,
+.sidebar .view:selected:focus {
+    background-color: @nord_raised;
+    color: @nord_text;
+    box-shadow: inset 2px 0 0 @nord_needle;
+}
+
+.sidebar .view.cell:hover {
+    color: @nord_text;
+}
+
+/* Icon view and list view: the same raised row and needle. */
+.standard-view iconview:selected,
+.standard-view iconview:selected:focus,
+.standard-view iconview.view:selected,
+.standard-view iconview.view:selected:focus {
+    background-color: @nord_raised;
+    background-image: none;
+    color: @nord_text;
+    outline: none;
+    border-radius: 0;
+    box-shadow: inset 2px 0 0 @nord_needle;
+}
+
+.standard-view treeview.view:selected,
+.standard-view treeview.view:selected:focus {
+    background-color: @nord_raised;
+    color: @nord_text;
+    outline: none;
+    box-shadow: inset 2px 0 0 @nord_needle;
+    border-radius: 0;
+}
+
+.standard-view treeview.view header button {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid @nord_hair;
+    background-image: url("nordschleife-nacht/scale.png");
+    background-repeat: repeat-x;
+    background-position: left bottom;
+    background-size: 40px 7px;
+    padding-bottom: 8px;
+    color: @nord_muted;
+    font-family: "Barlow Semi Condensed", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+}
+
+.split-view-inactive-pane {
+    opacity: 0.8;
+}
+
+/* Status bar: small mono in muted. */
+statusbar,
+.statusbar-text {
+    border-top: 1px solid @nord_hair;
+    color: @nord_muted;
+    font-family: "Overpass Mono", monospace;
+    font-size: 11px;
+}

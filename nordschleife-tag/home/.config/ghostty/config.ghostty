@@ -1,0 +1,45 @@
+# Nordschleife tag terminal. Night at 95%, compositor blur behind it.
+
+font-family = Overpass Mono
+font-family = JetBrainsMono Nerd Font
+font-size = 10.5
+adjust-cell-height = 30%
+window-padding-x = 16
+window-padding-y = 16
+window-decoration = none
+background-opacity = 0.95
+background-blur = true
+
+background = #E9EBEE
+foreground = #2B2F35
+cursor-color = #A83C00
+cursor-text = #E9EBEE
+cursor-style = bar
+cursor-style-blink = false
+selection-background = #DADDE2
+selection-foreground = #0F1113
+
+# Search and splits in the theme's colours (ghostty's stock yellow and orange otherwise).
+search-background = #1A6B43
+search-foreground = #E9EBEE
+search-selected-background = #A83C00
+search-selected-foreground = #E9EBEE
+split-divider-color = #B9BEC6
+unfocused-split-fill = #E9EBEE
+
+palette = 0=#0F1113
+palette = 1=#B01E26
+palette = 2=#1A6B43
+palette = 3=#A83C00
+palette = 4=#1F4F96
+palette = 5=#5B3FA0
+palette = 6=#146A70
+palette = 7=#555B64
+palette = 8=#7A808A
+palette = 9=#8E171E
+palette = 10=#12553A
+palette = 11=#8A3100
+palette = 12=#173F7A
+palette = 13=#47307F
+palette = 14=#0F5459
+palette = 15=#0F1113

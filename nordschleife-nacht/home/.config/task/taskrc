@@ -1,0 +1,20 @@
+# Taskwarrior. Shown in waybar as "yawm" (~/.local/bin/waybar-yawm):
+#   click        list popup   (~/.local/bin/nordschleife-yawm -> nordschleife-yawm-menu)
+#   right-click  quick add    (~/.local/bin/nordschleife-yawm add)
+# Tasks tagged +note are notes: listed last, never counted in the bar.
+
+data.location=~/.local/share/task
+news.version=3.5.0
+editor=nvim
+weekstart=monday
+
+# Nordschleife nacht colours (256-colour approximations): overdue in Warnrot,
+# due today in the needle orange, notes in Kontrollgruen.
+color.due.today=bold rgb520
+color.due=rgb444
+color.overdue=bold rgb511
+color.tag.note=rgb242
+color.active=rgb242
+color.header=gray14
+color.label=gray14
+color.footnote=gray10

@@ -1,0 +1,79 @@
+# Nordschleife tag terminal. Night at 95%, compositor blur behind it.
+
+[window]
+opacity = 0.95
+padding = { x = 16, y = 16 }
+decorations = "None"
+blur = true
+
+[font]
+normal = { family = "Overpass Mono", style = "Regular" }
+size = 10.5
+offset = { x = 0, y = 4 }
+
+[cursor]
+style = { shape = "Beam", blinking = "Off" }
+vi_mode_style = { shape = "Block" }
+thickness = 0.2
+
+[colors.primary]
+background = "#E9EBEE"
+foreground = "#2B2F35"
+bright_foreground = "#0F1113"
+
+[colors.cursor]
+text = "#E9EBEE"
+cursor = "#A83C00"
+
+[colors.selection]
+text = "#0F1113"
+background = "#DADDE2"
+
+# Search, hints, the footer bar and the vi-mode cursor in the theme's colours (alacritty's stock ones otherwise).
+[colors.search.matches]
+foreground = "#E9EBEE"
+background = "#1A6B43"
+
+[colors.search.focused_match]
+foreground = "#E9EBEE"
+background = "#A83C00"
+
+[colors.hints.start]
+foreground = "#E9EBEE"
+background = "#A83C00"
+
+[colors.hints.end]
+foreground = "#A83C00"
+background = "#DADDE2"
+
+[colors.footer_bar]
+foreground = "#0F1113"
+background = "#DADDE2"
+
+[colors.line_indicator]
+foreground = "#E9EBEE"
+background = "#2B2F35"
+
+[colors.vi_mode_cursor]
+text = "#E9EBEE"
+cursor = "#1A6B43"
+
+[colors.normal]
+black   = "#0F1113"
+red     = "#B01E26"
+green   = "#1A6B43"
+yellow  = "#A83C00"
+blue    = "#1F4F96"
+magenta = "#5B3FA0"
+cyan    = "#146A70"
+white   = "#555B64"
+
+[colors.bright]
+black   = "#7A808A"
+red     = "#8E171E"
+green   = "#12553A"
+yellow  = "#8A3100"
+blue    = "#173F7A"
+magenta = "#47307F"
+cyan    = "#0F5459"
+white   = "#0F1113"

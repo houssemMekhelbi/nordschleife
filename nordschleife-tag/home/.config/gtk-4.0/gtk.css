@@ -1,0 +1,39 @@
+/* Nordschleife tag for GTK4 / libadwaita: named colours only, so apps keep their own
+ * layout while picking up the palette. The accent is aluminium (structure);
+ * orange stays the needle (warning colour); destructive and error are Warnrot. */
+
+@define-color accent_color            #2B2F35;
+@define-color accent_bg_color         #2B2F35;
+@define-color accent_fg_color         #F4F5F6;
+
+@define-color destructive_color       #B01E26;
+@define-color destructive_bg_color    #F5555B;
+@define-color destructive_fg_color    #0A0A0B;
+@define-color success_color           #1A6B43;
+@define-color success_bg_color        #1A6B43;
+@define-color warning_color           #A83C00;
+@define-color warning_bg_color        #FF6A1A;
+@define-color warning_fg_color        #0A0A0B;
+@define-color error_color             #B01E26;
+@define-color error_bg_color          #F5555B;
+
+@define-color window_bg_color         #E9EBEE;
+@define-color window_fg_color         #0F1113;
+@define-color view_bg_color           #F5F6F7;
+@define-color view_fg_color           #0F1113;
+@define-color headerbar_bg_color      #F5F6F7;
+@define-color headerbar_fg_color      #0F1113;
+@define-color headerbar_border_color  #B9BEC6;
+@define-color headerbar_backdrop_color #E9EBEE;
+@define-color sidebar_bg_color        #E9EBEE;
+@define-color sidebar_fg_color        #0F1113;
+@define-color sidebar_border_color    #B9BEC6;
+@define-color secondary_sidebar_bg_color #E9EBEE;
+@define-color card_bg_color           #F5F6F7;
+@define-color card_fg_color           #0F1113;
+@define-color dialog_bg_color         #F5F6F7;
+@define-color dialog_fg_color         #0F1113;
+@define-color popover_bg_color        #F5F6F7;
+@define-color popover_fg_color        #0F1113;
+@define-color thumbnail_bg_color      #DADDE2;
+@define-color borders                 #B9BEC6;

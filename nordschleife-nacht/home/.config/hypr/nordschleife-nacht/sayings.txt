@@ -1,0 +1,6 @@
+# Lines shown on the Nordschleife lock screen under the password plate, one per line.
+# Blank lines and lines starting with # are skipped; the line changes every
+# 10 minutes when there are several. Facts about the circuit, nothing else.
+Grüne Hölle · 20,832 km
+73 Kurven · 300 m Höhenunterschied
+33 links · 40 rechts

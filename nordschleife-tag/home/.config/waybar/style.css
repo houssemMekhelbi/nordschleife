@@ -1,0 +1,248 @@
+/* Nordschleife tag bar. Everything is an instrument: three flat plates (left, centre,
+ * right) on the plate colour with a hairline border, a speedometer tick scale
+ * along the lower edge (a major tick every 40px, a minor one every 8px) and
+ * crop marks on the four corners. Right angles only. Workspaces are numerals
+ * standing on the scale, drawn as one image per slot and state; the focused
+ * one is orange and carries the orange needle. Orange appears nowhere else on
+ * the bar except the yawm count when something is due. The scale tile, frame,
+ * numerals and nordschleife-tag/ws.css come from ~/.config/hypr/nordschleife-tag/build-art.py.
+ * Labels are Barlow Semi Condensed 600 caps (markup in config.jsonc), values
+ * Overpass Mono. */
+
+@import url("nordschleife-tag/ws.css");
+
+@define-color ground #E9EBEE;
+@define-color plate  #F5F6F7;
+@define-color sel    #DADDE2;
+@define-color line   #B9BEC6;
+@define-color dim    #7A808A;
+@define-color muted  #555B64;
+@define-color alu    #2B2F35;
+@define-color text   #0F1113;
+@define-color orange #A83C00;
+@define-color green  #1A6B43;
+@define-color red    #B01E26;
+
+* {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    text-shadow: none;
+    min-height: 0;
+    font-family: "Barlow Semi Condensed", "Noto Kufi Arabic", "JetBrainsMono Nerd Font", sans-serif;
+    font-size: 13px;
+}
+
+window#waybar {
+    background: transparent;
+    color: @text;
+}
+
+tooltip {
+    background: alpha(@plate, 0.98);
+    border: 1px solid @line;
+}
+
+tooltip label {
+    padding: 4px 6px;
+    color: @text;
+    font-family: "Overpass Mono", "JetBrainsMono Nerd Font", monospace;
+    font-size: 12px;
+}
+
+/* ---- the plates -------------------------------------------------------- */
+/* The hairline and the crop marks are one 9-slice border-image (GTK paints a
+ * CSS border over the background, so marks on the border line cannot be
+ * background images). The plate colour and the scale tile are backgrounds
+ * under it; the bottom padding keeps the text clear of the ticks. */
+
+.modules-left,
+.modules-center,
+.modules-right {
+    padding: 0 8px 0 8px;
+    border: 7px solid transparent;
+    border-image: url("nordschleife-tag/frame.png") 7 / 7px stretch;
+    background-color: alpha(@plate, 0.94);
+    background-image: url("nordschleife-tag/scale.png");
+    background-repeat: repeat-x;
+    background-position: 12px bottom;
+    background-origin: border-box;
+    background-clip: border-box;
+    background-size: 40px 7px;
+}
+
+.modules-center {
+    padding: 0 20px;
+}
+
+window#waybar.empty #window {
+    padding: 0;
+    border: none;
+}
+
+/* ---- workspaces: numerals on the scale ------------------------------------ */
+/* hattin-workspaces prints a glyph per slot; here the glyph is hidden and
+ * nordschleife-tag/ws.css gives every slot its numeral for the state. The cells are as
+ * tall as the plate (see #workspaces below) so the
+ * needle rises from the plate's lower edge, out of the scale. The foreign slot
+ * stays text: one hollow green square per workspace from another monitor. */
+
+/* the group box spans the plate's 7px frame above and below, so the cells are as
+ * tall as the plate; on the cells themselves the negative margin is clipped by the group */
+#workspaces {
+    margin: -7px 0;
+}
+
+#custom-ws-1, #custom-ws-2, #custom-ws-3, #custom-ws-4, #custom-ws-5,
+#custom-ws-6, #custom-ws-7, #custom-ws-8, #custom-ws-9, #custom-ws-10 {
+    min-width: 40px;
+    padding: 0;
+    margin: 0;
+    color: transparent;
+    font-size: 12px;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: 40px 38px;
+}
+
+#custom-ws-x {
+    min-width: 0;
+    padding: 0 6px 0 4px;
+    color: @green;
+    font-family: "DejaVu Sans Mono", "Overpass Mono", monospace;
+    font-size: 12px;
+}
+
+#custom-ws-x.active {
+    color: @text;
+}
+
+#custom-ws-1:hover, #custom-ws-2:hover, #custom-ws-3:hover, #custom-ws-4:hover,
+#custom-ws-5:hover, #custom-ws-6:hover, #custom-ws-7:hover, #custom-ws-8:hover,
+#custom-ws-9:hover, #custom-ws-10:hover {
+    background-color: alpha(@alu, 0.10);
+}
+
+/* ---- modules: values between hairlines -------------------------------------- */
+
+#custom-mawaqit,
+#window,
+#custom-proton,
+#custom-tailscale,
+#network,
+#wireplumber,
+#bluetooth,
+#cpu,
+#memory,
+#temperature,
+#custom-nvidia,
+#power-profiles-daemon,
+#battery,
+#custom-tray-leader,
+#custom-notifications,
+#custom-idle,
+#custom-yawm {
+    margin: 4px 0 3px 0;
+    padding: 0 12px;
+    border-left: 1px solid @line;
+    color: @text;
+    font-family: "Overpass Mono", "JetBrainsMono Nerd Font", monospace;
+    font-size: 12.5px;
+}
+
+/* the first module of the right plate has no rule on its left */
+#network {
+    border-left: none;
+    padding-left: 4px;
+}
+
+/* next prayer: city as a muted label, prayer in aluminium, time in text colour
+ * (markup from waybar-mawaqit); classes: soon (<15m), iqama, error, unset. */
+#custom-mawaqit.error,
+#custom-mawaqit.unset {
+    color: @muted;
+}
+
+#window {
+    color: @alu;
+    font-family: "Barlow Semi Condensed", "Noto Kufi Arabic", sans-serif;
+    font-size: 13px;
+}
+
+#clock {
+    padding: 0;
+    color: @text;
+    font-family: "Overpass Mono", "JetBrainsMono Nerd Font", monospace;
+    font-size: 13px;
+}
+
+#power-profiles-daemon {
+    color: @muted;
+}
+
+#custom-proton.up,
+#custom-tailscale.up,
+#custom-nvidia.active {
+    color: @green;
+}
+
+#custom-proton.down,
+#custom-tailscale.down {
+    color: @red;
+}
+
+/* due today: the count in the needle orange; overdue: Warnrot */
+#custom-yawm.due {
+    color: @orange;
+    font-weight: 700;
+}
+
+#custom-yawm.overdue {
+    color: @red;
+    font-weight: 700;
+}
+
+#custom-idle.off,
+#battery.warning,
+#temperature.critical {
+    color: @orange;
+}
+
+#battery.critical {
+    color: #0A0A0B;
+    background: #F5555B;
+}
+
+/* ---- click-to-reveal groups (NET, SYS, ···) ---------------------------------- */
+
+#custom-tray-leader {
+    color: @muted;
+    letter-spacing: 1px;
+}
+
+#tray {
+    margin: 2px 0 1px 0;
+    padding: 0 10px;
+    border-left: 1px solid @line;
+}
+
+#network:hover,
+#cpu:hover,
+#custom-tray-leader:hover,
+#custom-mawaqit:hover,
+#custom-notifications:hover,
+#custom-idle:hover,
+#custom-yawm:hover {
+    background-color: alpha(@alu, 0.10);
+}
+
+#tray menu {
+    background: @plate;
+    border: 1px solid @line;
+    color: @text;
+}
+
+#tray menu menuitem:hover {
+    background: @sel;
+    box-shadow: inset 2px 0 0 #FF6A1A;
+}

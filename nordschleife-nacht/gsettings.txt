@@ -1,0 +1,8 @@
+# org.gnome.desktop.interface keys applied by restore.sh (captured 2026-09-20)
+gtk-theme='Adwaita'
+icon-theme='NordschleifeNacht'
+color-scheme='prefer-dark'
+font-name='Barlow Semi Condensed 11'
+monospace-font-name='Overpass Mono 10'
+cursor-theme='NordschleifeNachtNadel'
+cursor-size=24

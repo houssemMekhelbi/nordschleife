@@ -1,0 +1,83 @@
+#!/usr/bin/env python3
+"""The lap scale of the Nordschleife lock screen (Nordschleife tag colours).
+
+hyprlock draws no ticks, so its `image` widget shows a PNG that this script
+re-renders (rsvg-convert): the hour as one lap. Three sector bars (S1 00-20,
+S2 20-40, S3 40-60) fill in aluminium as the hour passes, and under them a
+scale from 00 to 60 carries the orange needle on the current minute. Both
+Nordschleife variants install this file with their own colours.
+
+    nordschleife-lock-scale              render for now if the minute changed, print the PNG's path
+                                         (hyprlock: reload_cmd; the path goes to stdout)
+    nordschleife-lock-scale --static F   the scale without needle and fill, to F (build-art.py:
+                                         what the lock shows until the first reload)
+    nordschleife-lock-scale --at HH:MM F a given time, to F (previews)
+"""
+
+import os
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+LINE, MUTED, ALU, TEXT, ORANGE = "#B9BEC6", "#555B64", "#2B2F35", "#0F1113", "#FF6A1A"
+W, H, X0, SPAN = 640, 112, 20, 599     # canvas; the scale runs from X0 to X0 + SPAN
+MONO = "Overpass Mono"
+
+
+def svg(minute=None):
+    out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">']
+    sw = (SPAN + 1 - 18) / 3
+    for k, (name, rng) in enumerate((("S1", "00-20"), ("S2", "20-40"), ("S3", "40-60"))):
+        x = X0 + k * (sw + 9)
+        frac = 0 if minute is None else max(0.0, min(1.0, (minute - 20 * k) / 20))
+        current = minute is not None and 20 * k <= minute < 20 * (k + 1)
+        out.append(f'<rect x="{x:.1f}" y="4" width="{sw:.1f}" height="3" fill="{LINE}"/>')
+        if frac:
+            out.append(f'<rect x="{x:.1f}" y="4" width="{sw * frac:.1f}" height="3" fill="{ALU}"/>')
+        out.append(f'<text x="{x:.1f}" y="24" font-family="{MONO}" font-size="11" letter-spacing="1" fill="{MUTED}">{name}</text>')
+        out.append(f'<text x="{x + sw:.1f}" y="24" text-anchor="end" font-family="{MONO}" font-size="11" letter-spacing="1" '
+                   f'fill="{TEXT if current else MUTED}">{rng}</text>')
+    y = 48
+    for m in range(61):
+        x = X0 + 0.5 + m * (SPAN - 1) / 60
+        quarter, big = m % 15 == 0, m % 5 == 0
+        out.append(f'<rect x="{x - (0.7 if quarter else 0.5):.1f}" y="{y}" width="{1.4 if quarter else 1}" height="{16 if quarter else 10 if big else 5}" '
+                   f'fill="{TEXT if quarter else ALU if big else MUTED}"/>')
+        if quarter:
+            out.append(f'<text x="{x:.1f}" y="{y + 34}" text-anchor="middle" font-family="{MONO}" font-size="12" fill="{MUTED}">{m:02d}</text>')
+    if minute is not None:
+        x = X0 + 0.5 + minute * (SPAN - 1) / 60
+        out.append(f'<rect x="{x - 1.5:.1f}" y="{y - 4}" width="3" height="28" fill="{ORANGE}"/>')
+    return "\n".join(out) + "\n</svg>\n"
+
+
+def render(minute, out):
+    out = Path(out)
+    tmp = out.with_name(out.name + ".tmp")
+    subprocess.run(["rsvg-convert", "-o", str(tmp), "/dev/stdin"], input=svg(minute).encode(), check=True)
+    tmp.replace(out)
+
+
+def main():
+    a = sys.argv[1:]
+    if a[:1] == ["--static"]:
+        return render(None, a[1])
+    if a[:1] == ["--at"]:
+        return render(int(a[1].split(":")[1]), a[2])
+    out = Path(os.environ.get("XDG_RUNTIME_DIR", "/tmp")) / "nordschleife-lock-scale.png"
+    t = time.localtime()
+    stamp = out.with_suffix(".minute")
+    key = f"tag {t.tm_yday} {t.tm_hour}:{t.tm_min}"
+    try:
+        fresh = out.exists() and stamp.read_text() == key
+    except OSError:
+        fresh = False
+    if not fresh:
+        render(t.tm_min, out)
+        stamp.write_text(key)
+    print(out)
+
+
+if __name__ == "__main__":
+    main()

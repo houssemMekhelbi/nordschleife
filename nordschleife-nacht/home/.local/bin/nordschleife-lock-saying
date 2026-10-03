@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+"""Lock-screen line (Nordschleife): one line of circuit facts under the password plate. No username.
+
+    nordschleife-lock-saying     the current line, letter-spaced
+
+Lines come from ~/.config/hypr/nordschleife-nacht/sayings.txt, one per line. The line
+changes every 10 minutes; the index comes from the clock.
+"""
+
+import time
+from html import escape
+from pathlib import Path
+
+SAYINGS = Path.home() / ".config/hypr/nordschleife-nacht/sayings.txt"
+
+
+def main():
+    try:
+        lines = [l.strip() for l in SAYINGS.read_text(encoding="utf-8").splitlines()]
+    except OSError:
+        return
+    sayings = [l for l in lines if l and not l.startswith("#")]
+    if sayings:
+        print(f"<span letter_spacing='3000'>{escape(sayings[int(time.time() // 600) % len(sayings)])}</span>")
+
+
+if __name__ == "__main__":
+    main()
