@@ -300,6 +300,7 @@
     "on-click-right": "~/.local/bin/nordschleife-yawm add"
   },
   "clock": {
+    "locale": "en_GB.UTF-8",
     "format": "<span color='#2B2F35'>{0:%a %d %b}</span>   <span weight='700' size='large'>{0:%H:%M}</span>",
     "tooltip-format": "<tt>{calendar}</tt>",
     "calendar": {

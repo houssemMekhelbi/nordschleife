@@ -16,7 +16,7 @@
 
 setopt prompt_subst
 
-NORD_DEFAULT_USER=${NORD_DEFAULT_USER:-rahal}   # hide context on your own box
+NORD_DEFAULT_USER=${NORD_DEFAULT_USER:-$USER}   # hide context on your own box
 
 N_GROUND='#E9EBEE' N_SEL='#DADDE2' N_LINE='#B9BEC6' N_ALU='#2B2F35' N_ONALU='#F4F5F6' N_TEXT='#0F1113'
 N_ORANGE='#A83C00' N_GREEN='#1A6B43' N_RED='#F5555B' N_ONRED='#0A0A0B' N_DIM='#7A808A'
