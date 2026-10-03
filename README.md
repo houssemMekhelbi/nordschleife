@@ -61,8 +61,8 @@ sudo pacman -S --needed $(grep -v '^#' nordschleife-nacht/packages.txt)
 > Everything it replaces is backed up first.
 
 ```sh
-git clone https://github.com/houssemMekhelbi/hattin-nordschleife.git
-cd hattin-nordschleife
+git clone https://github.com/houssemMekhelbi/nordschleife.git
+cd nordschleife
 ./nordschleife-nacht/restore.sh --dry-run   # show what would change, touch nothing
 ./nordschleife-nacht/restore.sh             # apply nordschleife-nacht
 ./nordschleife-tag/restore.sh               # or nordschleife-tag
